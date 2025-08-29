@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anime Fanart Gallery</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
+    h1 { text-align: center; }.gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }.art-card { background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 200px; }.art-card img { width: 100%; border-radius: 8px 8px 0 0; }.art-card.caption { padding: 10px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <h1>Anime Fanart Gallery</h1>
+  <div class="gallery">
+    <div class="art-card">
+      <img src="Tamamo Sexy.jpg" alt="Fanart 1">
+      <div class="caption">Judul Fanart 1</div>
+    </div>
+    <div class="art-card">
+      <img src="https://example.com/art2.jpg" alt="Fanart 2">
+      <div class="caption">Judul Fanart 2</div>
+    </div>
+    <!-- Tambahin art card sesuai kebutuhan -->
+  </div>
+  <input type="file" id="upload" accept="image/*" multiple>
+<div class="gallery" id="gallery"></div>
+<script>
+  const upload = document.getElementById('upload');
+  const gallery = document.getElementById('gallery');
+
+  upload.addEventListener('change', (e) => {
+    gallery.innerHTML = ''; // Clear gallery
+    Array.from(e.target.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const artCard = document.createElement('div');
+        artCard.className = 'art-card';
+
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.alt = file.name;
+        img.style.cursor = 'pointer';
+        img.onclick = () => {
+          // Buka gambar fullscreen di tab baru
+          const imageWindow = window.open('');
+          imageWindow.document.write('<img src="' + img.src + '" style="width:100%">');
+        };
+
+        const caption = document.createElement('div');
+        caption.className = 'caption';
+        caption.textContent = file.name;
+
+        artCard.appendChild(img);
+        artCard.appendChild(caption);
+        gallery.appendChild(artCard);
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+</script>
+
+</body>
+</html>
